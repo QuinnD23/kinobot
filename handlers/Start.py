@@ -44,54 +44,6 @@ async def command_start(message: Message):
         await StateMachine.StartMenu.set()
 
 
-@dp.message_handler(Command("admin"))
-async def command_start(message: Message):
-    user_id = str(message.from_user.id)
-    user_name = str(message.from_user.username)
-
-    if admin_id == user_id:
-        try:
-            await insert_db("params", "user_id", user_id)
-        except:
-            pass
-        await update_db("params", "user_id", "user_name", user_id, user_name)
-
-        await message.answer(f"Привет, админ!", reply_markup=AdminMark)
-        await StateMachine.StartMenu.set()
-    else:
-        await message.answer("У вас нет прав🔒\n"
-                             "Напишите: /start")
-
-
-@dp.message_handler()
-async def mess(message: Message):
-    user_id = str(message.from_user.id)
-    user_name = str(message.from_user.username)
-
-    if user_id == admin_id:
-        check = True
-
-        try:
-            await select_db("params", "user_id", "user_num", user_id)
-        except:
-            check = False
-
-        if check:
-            await message.answer(f"Привет, админ!", reply_markup=AdminMark)
-            await StateMachine.StartMenu.set()
-    else:
-        check = True
-
-        try:
-            await select_db("params", "user_id", "user_num", user_id)
-        except:
-            check = False
-
-        if check:
-            await message.answer(f"Привет, {user_name}!", reply_markup=StartMenuMark)
-            await StateMachine.StartMenu.set()
-
-
 @dp.message_handler(state=StateMachine.StartMenu)
 async def mes_state(message: Message):
     user_id = str(message.from_user.id)
