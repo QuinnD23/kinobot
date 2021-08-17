@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   db:
-    container_name: kino_database
+    container_name: database
     image: postgres
     restart: always
     environment:
@@ -15,7 +15,7 @@ services:
 #    network_mode: "host"
 
   adminer:
-    container_name: kino_adminer
+    container_name: adminer
     image: adminer
     restart: always
     ports:
@@ -23,7 +23,7 @@ services:
 #    network_mode: "host"
 
   tgbot:
-    container_name: kino_bot
+    container_name: bot
     build: .
     volumes:
       - .:/src
